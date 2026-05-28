@@ -2,8 +2,18 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Jellycat Ukraine 🇬🇧 — Оригінал з Британії</title>
+
+<!-- PWA / iPhone: встановлення на екран «Додому» та робота офлайн -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#C8501A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Jellycat UA">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -37,6 +47,7 @@ body {
   overflow: hidden;
   white-space: nowrap;
   padding: 10px 0;
+  padding-top: calc(10px + env(safe-area-inset-top, 0px));
   position: sticky;
   top: 0;
   z-index: 100;
@@ -64,7 +75,7 @@ body {
 /* CART BUTTON */
 .cart-btn {
   position: fixed;
-  bottom: 24px;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
   right: 20px;
   z-index: 200;
   background: var(--ink);
@@ -1260,6 +1271,16 @@ function toggleCart() {
 
 function closeCartOutside(e) {
   if (e.target === document.getElementById('cartOverlay')) toggleCart();
+}
+
+// Реєстрація service worker — потрібна для офлайн-роботи та встановлення як застосунку.
+// Працює лише з http(s) (наприклад, локальний сервер), а не при відкритті file://
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch((err) => {
+      console.warn('SW registration failed:', err);
+    });
+  });
 }
 </script>
 </body>
