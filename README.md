@@ -58,3 +58,11 @@ Branch: `main` / `/ (root)` → Save.**
 | `make_icons.py` | генератор иконок (если захочешь поменять дизайн) |
 | `serve.py` | локальный сервер для просмотра на телефоне |
 | `.nojekyll` | отключает обработку Jekyll на GitHub Pages |
+
+---
+
+## 🏁 Игра «Нитро-Двор» (драг-рейсинг)
+
+В папке [`dragrace/`](dragrace/) — браузерная игра в жанре драг-рейсинга (TypeScript + Vite + Canvas,
+сервер Fastify + Prisma/SQLite + WebSocket). Запуск, открытие на iPhone, деплой и план упаковки в
+VK Mini App и Capacitor — в [`dragrace/README.md`](dragrace/README.md).

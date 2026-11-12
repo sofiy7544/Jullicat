@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#3a1d80"/><stop offset="1" stop-color="#07081a"/></radialGradient>
+    <linearGradient id="t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#ffd23f"/><stop offset=".55" stop-color="#ff7a1a"/><stop offset="1" stop-color="#c2185b"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="110" fill="url(#bg)"/>
+  <g fill="none" stroke="#5ce1ff" stroke-width="10" opacity=".5"><path d="M60 360 H452"/><path d="M90 400 H422" stroke-dasharray="30 22"/></g>
+  <path d="M96 330 l30-64 l90-30 h110 l70 40 l40 10 l4 44 z" fill="#ff3fd8"/>
+  <circle cx="170" cy="334" r="34" fill="#111" stroke="#ccc" stroke-width="10"/>
+  <circle cx="370" cy="334" r="34" fill="#111" stroke="#ccc" stroke-width="10"/>
+  <text x="256" y="200" text-anchor="middle" font-family="Arial Black, Arial" font-weight="900" font-size="120" fill="url(#t)" stroke="#000" stroke-width="6" transform="skewX(-10) translate(36 0)">N2O</text>
+</svg>

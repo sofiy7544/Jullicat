@@ -1,0 +1,118 @@
+// SQLite + Prisma. Профиль игрока хранится JSON-строкой (единая логика с клиентом
+// в пакете shared), а поля для поиска и рейтингов вынесены в колонки.
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String    @id @default(cuid())
+  nick         String    @unique
+  nickLower    String    @unique
+  passHash     String?
+  vkId         String?   @unique
+  profile      String
+  level        Int       @default(1)
+  xp           Int       @default(0)
+  weekKey      String    @default("")
+  weeklyPoints Int       @default(0)
+  pi           Float     @default(30)
+  carId        String    @default("borka")
+  best201      Float?
+  best402      Float?
+  best804      Float?
+  createdAt    DateTime  @default(now())
+  lastSeen     DateTime  @default(now())
+  sessions     Session[]
+  ghosts       Ghost[]
+}
+
+model Session {
+  token     String   @id
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}
+
+model Friendship {
+  id        String   @id @default(cuid())
+  fromId    String
+  toId      String
+  status    String   // pending | accepted
+  createdAt DateTime @default(now())
+  @@unique([fromId, toId])
+  @@index([toId])
+}
+
+model Race {
+  id        String   @id
+  userId    String
+  kind      String
+  ctx       String
+  status    String   @default("open") // open | done
+  result    String?
+  createdAt DateTime @default(now())
+  @@index([userId, status])
+}
+
+model Ghost {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  distance  Int
+  trackId   String
+  time      Float
+  pi        Float
+  carId     String
+  simCar    String
+  visual    String
+  inputs    String
+  semiAuto  Boolean
+  green     Int      @default(300)
+  createdAt DateTime @default(now())
+  @@unique([userId, distance])
+  @@index([distance, pi])
+}
+
+model WallPost {
+  id        String   @id @default(cuid())
+  wallId    String
+  authorId  String
+  type      String
+  text      String
+  createdAt DateTime @default(now())
+  @@index([wallId, createdAt])
+}
+
+model Gift {
+  id        String   @id @default(cuid())
+  fromId    String
+  toId      String
+  kind      String
+  day       String
+  claimed   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  @@unique([fromId, toId, day])
+  @@index([toId, claimed])
+}
+
+model TournamentEntry {
+  id      String @id @default(cuid())
+  week    String
+  userId  String
+  nick    String
+  carId   String
+  time    Float
+  @@unique([week, userId])
+  @@index([week, time])
+}
+
+model TournamentAward {
+  week String @id
+  at   DateTime @default(now())
+}

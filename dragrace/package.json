@@ -1,0 +1,25 @@
+{
+  "name": "nitro-dvor",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "shared",
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "npm run db && concurrently -n server,client -c cyan,magenta \"npm -w server run dev\" \"npm -w client run dev\"",
+    "dev:client": "npm -w client run dev",
+    "dev:server": "npm -w server run dev",
+    "db": "npm -w server run db",
+    "build": "npm -w client run build",
+    "start": "npm -w server run start",
+    "typecheck": "tsc -p shared && tsc -p client --noEmit && tsc -p server --noEmit",
+    "test": "npm -w shared run test"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "concurrently": "^9.1.2",
+    "typescript": "^5.6.3"
+  }
+}
